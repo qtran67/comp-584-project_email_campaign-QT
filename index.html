@@ -52,7 +52,84 @@
 				text-decoration: underline;
 			}
 
+			/* Button hover interactivity */
+			a.btn-order { transition: all 0.2s ease; }
+			a.btn-order:hover {
+				background-color: #c0392b !important;
+				box-shadow: 0px 10px 22px rgba(0,0,0,0.25);
+				transform: translateY(-4px);
+			}
+
+			a.btn-purchase { transition: all 0.2s ease; }
+			a.btn-purchase:hover {
+				background-color: #1a7a4a !important;
+				box-shadow: 0px 10px 22px rgba(0,0,0,0.25);
+				transform: translateY(-4px);
+			}
+
 			/* Responsive styles */
+			
+			/* Slide in + letter-spacing collapse */
+			@keyframes slide-in-left {
+				from { transform: translateX(-60px); letter-spacing: 8px; }
+				to   { transform: translateX(0);     letter-spacing: normal; }
+			}
+
+			/* Banana emoji wobble / rotation */
+			@keyframes banana-wobble {
+				0%   { transform: rotate(-14deg); }
+				25%  { transform: rotate(14deg); }
+				50%  { transform: rotate(-8deg); }
+				75%  { transform: rotate(8deg); }
+				100% { transform: rotate(0deg); }
+			}
+
+			/* Color-shift on the hero headline */
+			@keyframes color-shift {
+				0%   { color: #FF6B35; }
+				33%  { color: #e6a817; }
+				66%  { color: #c0392b; }
+				100% { color: #FF6B35; }
+			}
+
+			.anim-slide-in   { animation: 0.8s 1 slide-in-left; }
+			.anim-wobble     { display: inline-block; animation: 1.2s infinite banana-wobble; }
+			.anim-color-shift{ animation: 3s infinite color-shift; }
+
+
+			/* Checkbox Interactivity */
+			input[type="radio"] { display: none; }
+			label.slide-label   { cursor: pointer; }
+			.slide              { display: none; }
+
+			/* Show the correct slide based on checked radio */
+			#color1:checked ~ .slide-labels label[for="color1"],
+			#color2:checked ~ .slide-labels label[for="color2"],
+			#color3:checked ~ .slide-labels label[for="color3"] {
+				background-color: #FF6B35 !important;
+				color: #ffffff !important;
+			}
+			#color1:checked ~ .slide-container .slide1 { display: block; }
+			#color2:checked ~ .slide-container .slide2 { display: block; }
+			#color3:checked ~ .slide-container .slide3 { display: block; }
+
+			/* Responsiveness */
+			@media screen and (max-width: 600px) {
+
+				/* Make 600px fixed container fluid */
+				.mobile { width: 100% !important; }
+
+				/* Stack multi-column tables to full width */
+				.block  { display: block !important; width: 100% !important; }
+
+				/* Font-size adjustments for mobile */
+				.mobile-h1 { font-size: 26px !important; }
+				.mobile-h2 { font-size: 20px !important; }
+				.mobile-p  { font-size: 13px !important; }
+
+				/* Column padding on mobile */
+				.col-pad { padding: 10px 16px !important; }
+			}
 	
 		</style>
 	</head>
@@ -69,8 +146,9 @@
 						<!-- Logo image -->
 						 <tr>
 							<td style="padding: 40px 20px; background-color: #FFD700; background-image: url('images/banana_pattern.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-								<h1 style="margin: 0; color: #ffffff; font-size: 42px; font-family: Arial, sans-serif;">
+								<h1 class="anim-slide-in mobile-h1" style="margin: 0; color: #ffffff; font-size: 42px; font-family: Arial, sans-serif;">
 									THE BANANA PHONE
+									<span class="anim-wobble">🍌</span>
 								</h1>
 							</td>
 						</tr>
@@ -79,7 +157,7 @@
 						<!-- Headline -->
 						 <tr>
 							<td style="padding: 30px 20px; background-color: #fff8dc;">
-								<h2 style="color: #FF6B35; font-size: 32px; margin: 0; font-family: Arial, sans-serif;">
+								<h2 class="anim-color-shift mobile-h2" style="color: #FF6B35; font-size: 32px; margin: 0; font-family: Arial, sans-serif;">
 									Why Use Boring Rectangular phones?
 								</h2>
 							</td>
@@ -110,7 +188,8 @@
 								<table border="0" cellpadding="0" cellspacing="0">
 									<tr>
 										<td align="center" style="border-radius: 50px; background-color: #FF6B35;">
-											<a href="#" target="_blank" style="font-size: 20px; font-family: Arial, sans-serif; color: #ffffff; text-decoration: none; padding: 18px 50px; display: inline-block; font-weight: bold;">
+											<a class="btn-order" href="#" target="_blank"
+                         style="font-size:20px; font-family:Arial,sans-serif; color:#ffffff; text-decoration:none; padding:18px 50px; display:inline-block; font-weight:bold; background-color:#FF6B35; border-radius:50px;">
 												ORDER NOW! 🎉
 											</a>
 										</td>
@@ -270,6 +349,133 @@
 							</tr>
 							<tr><td style="font-size:0; line-height:0;" height="20">&nbsp;</td></tr>
 							</table>
+						</td>
+						</tr>
+
+
+						<!-- Checkbox Technique -->
+						<tr>
+						<td align="center" style="padding:30px 20px; background-color:#fff8dc;">
+
+							<h2 class="mobile-h2"
+								style="color:#FF6B35; font-size:24px; margin:0 0 10px 0;
+									font-family:Arial,sans-serif;">
+							Choose Your Color
+							</h2>
+							<p class="mobile-p"
+							style="color:#555; font-size:14px; font-family:Arial,sans-serif; margin:0 0 16px 0;">
+							Click a tab below to preview your perfect Banana Phone!
+							</p>
+
+							<!-- Hidden radio inputs — track state -->
+							<input type="radio" name="slides" id="color1" checked>
+							<input type="radio" name="slides" id="color2">
+							<input type="radio" name="slides" id="color3">
+
+							<!-- Tab labels (visible controls) -->
+							<div class="slide-labels" style="margin-bottom:0;">
+							<label for="color1" class="slide-label"
+									style="border:2px solid #FF6B35; display:inline-block;
+											margin:4px; padding:7px 16px; font-family:Arial,sans-serif;
+											font-size:13px; color:#FF6B35; border-radius:4px;
+											background-color:#ffffff; font-weight:bold;">
+								🍌 Classic Yellow
+							</label>
+							<label for="color2" class="slide-label"
+									style="border:2px solid #FF6B35; display:inline-block;
+											margin:4px; padding:7px 16px; font-family:Arial,sans-serif;
+											font-size:13px; color:#FF6B35; border-radius:4px;
+											background-color:#ffffff; font-weight:bold;">
+								🍌 Yellow with Spots
+							</label>
+							<label for="color3" class="slide-label"
+									style="border:2px solid #FF6B35; display:inline-block;
+											margin:4px; padding:7px 16px; font-family:Arial,sans-serif;
+											font-size:13px; color:#FF6B35; border-radius:4px;
+											background-color:#ffffff; font-weight:bold;">
+								🍌 Ripe Brown
+							</label>
+							</div>
+
+							<!-- Slide content panels -->
+							<div class="slide-container" style="width:100%; margin-top:0;">
+
+							<!-- Slide 1 -->
+							<div class="slide slide1"
+								style="background-color:#FFD700; padding:24px 20px;
+										text-align:center; border-radius:0 0 8px 8px;">
+								<p style="font-size:28px; margin:0 0 8px 0;">🍌</p>
+								<h3 style="color:#5a3e00; font-family:Arial,sans-serif;
+										font-size:18px; margin:0 0 10px 0;">Classic Yellow</h3>
+								<p class="mobile-p"
+								style="color:#5a3e00; font-size:14px; font-family:Arial,sans-serif;
+										line-height:1.6; margin:0 0 14px 0;">
+								This vibrant yellow banana phone boasts a bright, cheerful hue that exudes freshness and energy.
+								</p>
+								<strong style="color:#5a3e00; font-family:Arial,sans-serif; font-size:16px;">
+								$299 — In Stock ✅
+								</strong>
+							</div>
+
+							<!-- Slide 2 -->
+							<div class="slide slide2"
+								style="background-color:#d3b683; padding:24px 20px;
+										text-align:center; border-radius:0 0 8px 8px;">
+								<p style="font-size:28px; margin:0 0 8px 0;">🍌</p>
+								<h3 style="color:#5a3e00; font-family:Arial,sans-serif;
+										font-size:18px; margin:0 0 10px 0;">Yellow with Spots</h3>
+								<p class="mobile-p"
+								style="color:#5a3e00; font-size:14px; font-family:Arial,sans-serif;
+										line-height:1.6; margin:0 0 14px 0;">
+								Featuring a playful mix of yellow and scattered brown spots, this banana phone shows a touch of personality and ripeness.
+								</p>
+								<strong style="color:#5a3e00; font-family:Arial,sans-serif; font-size:16px;">
+								$349 — Limited Stock ⚠️
+								</strong>
+							</div>
+
+							<!-- Slide 3 -->
+							<div class="slide slide3"
+								style="background-color:#9d6832; padding:24px 20px;
+										text-align:center; border-radius:0 0 8px 8px;">
+								<p style="font-size:28px; margin:0 0 8px 0;">🍌</p>
+								<h3 style="color:#5a3e00; font-family:Arial,sans-serif;
+										font-size:18px; margin:0 0 10px 0;">Ripe Brown</h3>
+								<p class="mobile-p"
+								style="color:#5a3e00; font-size:14px; font-family:Arial,sans-serif;
+										line-height:1.6; margin:0 0 14px 0;">
+								Deeply browned and fully ripened, this banana phone carries a rich, earthy tone with a hint of sweetness.
+								</p>
+								<strong style="color:#5a3e00; font-family:Arial,sans-serif; font-size:16px;">
+								$449 — Pre-Order Now 🚀
+								</strong>
+							</div>
+
+							</div><!-- end .slide-container -->
+
+							<!-- Compare Button -->
+							<table border="0" cellpadding="0" cellspacing="0" role="presentation"
+								style="margin:20px auto 0 auto;">
+							<tr>
+								<td align="center" style="border-radius:50px; background-color:#2e8b57;">
+								<!--[if mso]>
+								<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+											xmlns:w="urn:schemas-microsoft-com:office:word"
+											href="#" style="height:50px;v-text-anchor:middle;width:220px;"
+											arcsize="50%" stroke="f" fillcolor="#2e8b57">
+									<w:anchorlock/><center>
+								<![endif]-->
+								<a class="btn-purchase" href="#" target="_blank"
+									style="font-size:16px; font-family:Arial,sans-serif; color:#ffffff;
+											text-decoration:none; padding:14px 36px; display:inline-block;
+											font-weight:bold; background-color:#2e8b57; border-radius:50px;">
+									Purchase →
+								</a>
+								<!--[if mso]></center></v:roundrect><![endif]-->
+								</td>
+							</tr>
+							</table>
+
 						</td>
 						</tr>
 
